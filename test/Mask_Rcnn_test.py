@@ -7,12 +7,13 @@ import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from datetime import datetime
-from my_Faster_tool.tool.RoIAlign_NHWC import roi_align
+from object_detection.tool.ROIAlign import roi_align
 
-from my_Faster_tool.tool.tf_PC_FPN_cpu import ProposalCreator
 from my_Faster_tool.tool.get_anchors import get_anchors
-from my_Faster_tool.tool import resnet_v1
-from my_Faster_tool.tool.faster_predict import predict
+from object_detection.tool.tf_PC_FPN import ProposalCreator
+from object_detection.tool.get_anchors import get_anchors
+from object_detection.tool import resnet_v1
+from object_detection.tool.faster_predict import predict
 from sklearn.externals import joblib
 from pycocotools import mask as maskUtils
 import codecs
@@ -510,9 +511,9 @@ def draw_gt(im, gt):
 if __name__ == "__main__":
     Mean = np.array([123.68, 116.78, 103.94], dtype=np.float32)
     path = '/home/zhai/PycharmProjects/Demo35/data_set_yxyx/'
-    # files = [path + 'voc_07.tf', path + 'voc_12.tf']
+  
     files = [path + 'coco_train2017.tf']
-    # files=[path+'coco_train2017_scale.tf']
+
     config = Config(False, Mean, files,None)
 
     faster_rcnn = Mask_rcnn_resnet_101(config)

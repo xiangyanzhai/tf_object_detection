@@ -540,9 +540,9 @@ def draw_gt(im, gt):
 if __name__ == "__main__":
     Mean = np.array([123.68, 116.78, 103.94], dtype=np.float32)
     path = '/home/zhai/PycharmProjects/Demo35/data_set_yxyx/'
-    # files = [path + 'voc_07.tf', path + 'voc_12.tf']
+    
     files = [path + 'coco_train2017.tf']
-    # files=[path+'coco_train2017_scale.tf']
+    
     config = Config(True, Mean, files, lr=0.00125, batch_size=2, gpus=2)
 
     faster_rcnn = Mask_rcnn_resnet_101(config)
