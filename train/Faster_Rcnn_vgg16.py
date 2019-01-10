@@ -338,10 +338,9 @@ class Faster_rcnn16():
 
         saver = tf.train.Saver(max_to_keep=200)
         config = tf.ConfigProto()
-        # config.gpu_options.allow_growth = True
+        config.gpu_options.allow_growth = True
         config.allow_soft_placement = True
-        # file='/home/zhai/PycharmProjects/Demo35/myDNN/train_voc_last/models/Faster_vgg16_07_2.ckpt-59999'
-        # file = '/home/zhai/PycharmProjects/Demo35/my_Faster/models/Faster_vgg16.ckpt-59999'
+       
         with tf.Session(config=config) as sess:
             sess.run(tf.global_variables_initializer())
             # saver.restore(sess,file)
