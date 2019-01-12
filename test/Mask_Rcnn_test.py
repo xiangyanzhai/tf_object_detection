@@ -2,14 +2,14 @@
 # -*- coding:utf-8 -*-
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from datetime import datetime
 from object_detection.tool.ROIAlign import roi_align
-
-from object_detection.tool.tf_PC_FPN import ProposalCreator
+from my_Faster_tool.tool.RoIAlign_NHWC import roi_align
+from my_Faster_tool.tool.tf_PC_FPN_cpu import ProposalCreator
 from object_detection.tool.get_anchors import get_anchors
 from object_detection.tool import resnet_v1
 from object_detection.tool.faster_predict import predict
@@ -260,7 +260,7 @@ class Mask_rcnn_resnet_101():
     def roi_layer(self, loc, score, anchor, img_size, map_HW):
 
         roi = self.PC(loc, score, anchor, img_size, map_HW, train=self.config.is_train)
-
+        roi.set_shape(tf.TensorShape([None,4]))
         area = tf.reduce_prod(roi[:, 2:4] - roi[:, :2] + 1, axis=1)
         roi_inds = tf.floor(4.0 + tf.log(area ** 0.5 / 224.0) / tf.log(2.0))
         roi_inds = tf.clip_by_value(roi_inds, 2, 5)
@@ -430,7 +430,7 @@ class Mask_rcnn_resnet_101():
         catId2cls, cls2catId, catId2name = joblib.load(
             '(catId2cls,cls2catId,catId2name).pkl')
 
-        file = '/home/zhai/PycharmProjects/Demo35/object_detection/train/models/Mask_Rcnn.ckpt-90000'
+        file = '/home/zhai/PycharmProjects/Demo35/object_detection/train/models/Mask_Rcnn.ckpt-340000'
         saver = tf.train.Saver()
         test_dir = r'/home/zhai/PycharmProjects/Demo35/dataset/coco/val2017/'
         names = os.listdir(test_dir)
@@ -444,7 +444,7 @@ class Mask_rcnn_resnet_101():
             saver.restore(sess, file)
 
             i = 0
-            mm = len(names)
+            mm = 10
             Res = []
             Res_mask = []
             time_start = datetime.now()
@@ -510,7 +510,7 @@ def draw_gt(im, gt):
 if __name__ == "__main__":
     Mean = np.array([123.68, 116.78, 103.94], dtype=np.float32)
     path = '/home/zhai/PycharmProjects/Demo35/data_set_yxyx/'
-  
+
     files = [path + 'coco_train2017.tf']
 
     config = Config(False, Mean, files,None)
