@@ -429,7 +429,7 @@ class Mask_rcnn_resnet_101():
         catId2cls, cls2catId, catId2name = joblib.load(
             '(catId2cls,cls2catId,catId2name).pkl')
 
-        file = '/home/zhai/PycharmProjects/Demo35/object_detection/train/models/Mask_Rcnn.ckpt-340000'
+        file = '../train/models/Mask_Rcnn.ckpt-90000'
         saver = tf.train.Saver()
         test_dir = r'/home/zhai/PycharmProjects/Demo35/dataset/coco/val2017/'
         names = os.listdir(test_dir)
@@ -443,7 +443,7 @@ class Mask_rcnn_resnet_101():
             saver.restore(sess, file)
 
             i = 0
-            mm = 10
+            mm = len(names)
             Res = []
             Res_mask = []
             time_start = datetime.now()
