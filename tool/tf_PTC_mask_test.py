@@ -55,7 +55,7 @@ class ProposalTargetCreator(object):
         inds = tf.concat([tf.reshape(inds, (-1, 1)), tf.reshape(inds_box, (-1, 1))], axis=1)
         iou = tf.gather_nd(IOU, inds)
         indsP = iou >= self.pos_iou_thresh
-        indsN = (iou >= self.neg_iou_thresh_lo) & (iou < self.pos_iou_thresh)
+        indsN = (iou >= self.neg_iou_thresh_lo) & (iou < self.neg_iou_thresh_hi)
 
         indsP = tf.where(indsP)[:, 0]
         indsN = tf.where(indsN)[:, 0]
