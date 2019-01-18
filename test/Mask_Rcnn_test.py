@@ -90,7 +90,7 @@ def loadNumpyAnnotations_mask(data, mask):
 
 class Config():
     def __init__(self, is_train, Mean, files, lr=1e-3, weight_decay=0.0001,
-                 num_cls=80, img_max=1024,
+                 num_cls=80, img_max=1333,
                  img_min=800, anchor_scales=[[32], [64], [128], [256], [512]],
                  anchor_ratios=[[0.5, 1, 2], [0.5, 1, 2], [0.5, 1, 2], [0.5, 1, 2], [0.5, 1, 2]],
                  batch_size=1, gpus=1,
