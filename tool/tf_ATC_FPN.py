@@ -58,6 +58,9 @@ class AnchorTargetCreator(object):
         t = tf.reduce_max(IOU, axis=0)
         t = tf.equal(IOU, t)
         indsP2 = tf.reduce_any(t, axis=1)
+        
+        inds_gt_box = tf.argmax(tf.to_int32(t), axis=1, output_type=tf.int32)
+        inds_box = inds_box * tf.to_int32(~indsP2) + inds_gt_box
 
         indsP = indsP1 | indsP2
         indsN = indsN & (~indsP2)
