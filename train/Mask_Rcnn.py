@@ -185,7 +185,7 @@ class Mask_rcnn_resnet_101():
     def fpn_net(self, C):
         C5, C4, C3, C2 = C
         with tf.variable_scope('FPN'):
-            with slim.arg_scope([slim.conv2d, ], weights_regularizer=slim.l2_regularizer(self.config.weight_decay),
+            with slim.arg_scope([slim.conv2d, ], weights_regularizer=slim.l2_regularizer(self.config.weight_decay),weights_initializer=tf.variance_scaling_initializer(),
                                 activation_fn=None):
                 H5 = tf.shape(C5)[1]
                 W5 = tf.shape(C5)[2]
@@ -349,7 +349,7 @@ class Mask_rcnn_resnet_101():
     def mask_net(self, net_mask):
         with tf.variable_scope('mask'):
             with slim.arg_scope([slim.conv2d, slim.conv2d_transpose],
-                                weights_regularizer=slim.l2_regularizer(self.config.weight_decay)):
+                                weights_regularizer=slim.l2_regularizer(self.config.weight_decay),weights_initializer=tf.variance_scaling_initializer()):
                 net_mask = slim.conv2d(net_mask, 256, [3, 3], scope='fcn1')
                 net_mask = slim.conv2d(net_mask, 256, [3, 3], scope='fcn2')
                 net_mask = slim.conv2d(net_mask, 256, [3, 3], scope='fcn3')
