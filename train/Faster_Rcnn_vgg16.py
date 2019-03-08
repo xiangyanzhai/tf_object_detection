@@ -213,10 +213,10 @@ class Faster_rcnn16():
         with tf.variable_scope('vgg_16', reuse=True):
             net_fast = slim.conv2d(net_fast, 4096, [7, 7], padding='VALID', scope='fc6')
 
-            net_fast = slim.dropout(net_fast, 0.5, is_training=True,
+            net_fast = slim.dropout(net_fast, 0.5, is_training=False,
                                     scope='dropout6')
             net_fast = slim.conv2d(net_fast, 4096, [1, 1], scope='fc7')
-            net_fast = slim.dropout(net_fast, 0.5, is_training=True,
+            net_fast = slim.dropout(net_fast, 0.5, is_training=False,
                                     scope='dropout7')
             net_fast = tf.squeeze(net_fast, [1, 2])
         with tf.variable_scope('fast') as scope:
