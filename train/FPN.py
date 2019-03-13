@@ -273,6 +273,7 @@ class Faster_rcnn_resnet_101_FPN():
         C5, C4, C3, C2 = C
         with tf.variable_scope('FPN'):
             with slim.arg_scope([slim.conv2d, ], weights_regularizer=slim.l2_regularizer(self.config.weight_decay),
+                                weights_initializer=tf.variance_scaling_initializer(),
                                 activation_fn=None):
                 H5 = tf.shape(C5)[1]
                 W5 = tf.shape(C5)[2]
