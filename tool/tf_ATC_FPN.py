@@ -63,7 +63,12 @@ class AnchorTargetCreator(object):
         inds_box = inds_box * tf.to_int32(~indsP2) + inds_gt_box
 
         indsP = indsP1 | indsP2
-        indsN = indsN & (~indsP2)
+        
+        if False:
+            indsN = indsN & (~indsP2)
+        else:
+            indsP=indsP&(~indsN)
+            print('注意：*******************这里是个参数********************  tf_ATC_FPN.py')
 
         indsP = tf.where(indsP)[:, 0]
         indsN = tf.where(indsN)[:, 0]
