@@ -75,7 +75,7 @@ class AnchorTargetCreator(object):
             indsN = indsN & (~indsP2)
         else:
             indsP=indsP&(~indsN)
-            print('注意：***************这里是个参数*************  ')
+            print('注意：***************这里是个参数*************  tf_ATC_test.py ')
 
         indsP = tf.where(indsP)[:, 0]
         indsN = tf.where(indsN)[:, 0]
